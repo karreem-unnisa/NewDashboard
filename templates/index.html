@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📰 News Dashboard</h1>
+        <form method="POST">
+            <input type="text" name="query" placeholder="Search topic..." value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+
+        {% if not query %}
+            <h2>Top Headlines</h2>
+        {% else %}
+            <h2>Search Results for "{{ query }}"</h2>
+        {% endif %}
+
+        <div class="news">
+            {% for article in articles %}
+                <div class="article">
+                    <h3><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h3>
+                    {% if article.urlToImage %}
+                        <img src="{{ article.urlToImage }}" alt="News Image">
+                    {% endif %}
+                    <p>{{ article.description }}</p>
+                    <small>{{ article.publishedAt }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
